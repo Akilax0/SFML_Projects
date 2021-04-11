@@ -4,7 +4,6 @@
 #include<math.h>
 using namespace sf;
 
-
 /*
 g++ -c Sales.cpp && 
 g++ Sales.o -o sfml-app -lsfml-graphics -lsfml-window -lsfml-system &&
@@ -21,6 +20,7 @@ struct stats
     int y;
 
 }cities[100];
+
 
 
 
@@ -45,7 +45,7 @@ int main(){
     city.setRadius(r);
     city.setOutlineColor(sf::Color::White);
     city.setOutlineThickness(2);
-    //city.setPosition(10, 20);
+    city.setPosition(10, 20);
 
     srand(time(NULL));
 
@@ -53,6 +53,32 @@ int main(){
         cities[i].x = 100 + rand()%600;
         cities[i].y = 100 + rand()%400;
     }
+
+    float matrix[n][n];
+    float memo[n][n];
+
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            memo[i][j]=NULL;
+            if(i==j){
+                matrix[i][j]=0;
+            }
+            else{
+                
+                float dis=sqrt(pow(abs(cities[i].x-cities[j].x),2) + pow(abs(cities[i].y-cities[j].y),2));
+                matrix[i][j] = dis;
+                matrix[j][i] = dis;
+            }
+        }
+    }
+
+    
+
+
+
+
+
+
 
 
     final[index]=Vertex(Vector2f(cities[curr].x+r,cities[curr].y+r),Color::Yellow);
@@ -72,6 +98,8 @@ int main(){
             appWindow.draw(city);
         }
 
+
+/*
         if(flag==false){
             if(iter<n && visited[iter]==false){
                 std::cout<<curr<<" "<<iter<<std::endl;
@@ -86,7 +114,6 @@ int main(){
             iter++;
 
             if(iter==n){
-                //asd
                 curr = mi.first;
                 visited[curr]=true;
                 mi.second = 480000;
@@ -95,7 +122,7 @@ int main(){
                 final[index]=Vertex(Vector2f(cities[curr].x+r,cities[curr].y+r),Color::Yellow);
             }
         }
-
+*/
         for(int i=0;i<index;i++){
             Vertex line[] = {final[i],final[i+1]};
             appWindow.draw(line, 2,Lines);
